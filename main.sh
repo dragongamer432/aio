@@ -87,7 +87,7 @@ render_menu() {
     echo "└─ [4] Utility Toolbox            [8] SHUTDOWN"
     echo ""
     echo "────────────────────────────────────────────────────────────────────────────"
-    echo -ne "${CYAN}➜ Command (1-8): ${NC}"
+    echo -ne "${CYAN}➜ root@DragonCloud: ${NC}"
 }
 
 # -------------------------------
