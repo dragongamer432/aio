@@ -109,7 +109,7 @@ while true; do
     render_menu
     read -r choice
     case $choice in
-        1) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/vps/run.sh) ;;
+        1) bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh) ;;
         2) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/panel/run.sh) ;;
         3) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/wings/run.sh) ;;
         4) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/tools/run.sh) ;;
