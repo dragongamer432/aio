@@ -1,6 +1,6 @@
 #!/bin/bash
 # ===========================================================
-# 🐉 DRAGONCLOUD V15 – FAST MENU, TYPED LINK ONLY
+# 🐉 DRAGONCLOUD V16 – HOST SET TO DRAGONCLOUD
 # ===========================================================
 
 # -------------------------------
@@ -48,7 +48,7 @@ get_metrics() {
     RAM=$(free | awk '/Mem:/ {printf "%.0f", $3/$2 * 100}')
     DISK=$(df -h / | awk 'NR==2 {print $5}')
     UPT=$(uptime -p | sed 's/up //')
-    HOST=$(hostname)
+    HOST="DragonCloud"   # Forced hostname
 }
 
 # -------------------------------
