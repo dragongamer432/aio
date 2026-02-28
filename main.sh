@@ -13,7 +13,7 @@ BG_SHADE='\033[100m'
 
 # ============== COMMAND LINKS (EDIT THESE) ==============
 CMD1="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh)"
-CMD2="bash <(curl -s https://yourlink.com/script2.sh)"
+CMD2="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/ptero.sh)"
 CMD3="bash <(curl -s https://yourlink.com/script3.sh)"
 CMD4="bash <(curl -s https://yourlink.com/script4.sh)"
 CMD5="bash <(curl -s https://yourlink.com/script5.sh)"
