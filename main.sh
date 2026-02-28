@@ -1,126 +1,91 @@
 #!/bin/bash
-# ===========================================================
-# 🐉 DRAGONCLOUD V16 – HOST SET TO DRAGONCLOUD
-# ===========================================================
 
-# -------------------------------
-# COLORS
-# -------------------------------
-NC="\e[0m"
-RED="\e[1;31m"
-CYAN="\e[1;36m"
-WHITE="\e[1;37m"
-GREEN="\e[1;32m"
+# ================= COLORS =================
+NC='\033[0m'
+B_RED='\033[1;31m'
+B_CYAN='\033[1;36m'
+B_PURPLE='\033[1;35m'
+B_GREEN='\033[1;32m'
+G='\033[0;32m'
+W='\033[1;37m'
+GOLD='\033[1;33m'
+BG_SHADE='\033[100m'
 
-# -------------------------------
-# TYPEWRITER FUNCTION (FOR LINK ONLY)
-# -------------------------------
-type_text() {
-    text="$1"
-    delay="${2:-0.01}"   # fast typing
-    for (( i=0; i<${#text}; i++ )); do
-        printf "%s" "${text:$i:1}"
-        sleep "$delay"
-    done
-    echo ""
-}
+# ============== COMMAND LINKS (EDIT THESE) ==============
+CMD1="bash <(curl -s https://yourlink.com/script1.sh)"
+CMD2="bash <(curl -s https://yourlink.com/script2.sh)"
+CMD3="bash <(curl -s https://yourlink.com/script3.sh)"
+CMD4="bash <(curl -s https://yourlink.com/script4.sh)"
+CMD5="bash <(curl -s https://yourlink.com/script5.sh)"
+CMD6="bash <(curl -s https://yourlink.com/script6.sh)"
+CMD7="bash <(curl -s https://yourlink.com/script7.sh)"
+CMD8="shutdown now"
 
-# -------------------------------
-# LOADING BAR (FAST)
-# -------------------------------
-loading_bar() {
-    total=30
-    for ((i=1; i<=total; i++)); do
-        filled=$(printf "%0.s█" $(seq 1 $i))
-        empty=$(printf "%0.s░" $(seq 1 $((total-i))))
-        percent=$((i*100/total))
-        printf "\r${WHITE}[${GREEN}${filled}${WHITE}${empty}] ${percent}%%${NC}"
-        sleep 0.03
-    done
-    echo -e "\n"
-}
-
-# -------------------------------
-# SYSTEM METRICS
-# -------------------------------
+# ================= REAL-TIME ANALYTICS =================
 get_metrics() {
     CPU=$(top -bn1 | grep "Cpu(s)" | awk '{printf "%.0f", $2+$4}')
-    RAM=$(free | awk '/Mem:/ {printf "%.0f", $3/$2 * 100}')
-    DISK=$(df -h / | awk 'NR==2 {print $5}')
+    RAM=$(free | grep Mem | awk '{printf "%.0f", $3*100/$2}')
     UPT=$(uptime -p | sed 's/up //')
-    HOST="DragonCloud"   # Forced hostname
+    DISK=$(df -h / | awk 'NR==2 {print $5}')
+    CURRENT_HOST="dragoncloud"
 }
 
-# -------------------------------
-# MENU RENDER (INSTANT PRINT)
-# -------------------------------
-render_menu() {
-    clear
-    get_metrics
+# ================= MENU =================
+show_menu() {
+clear
+get_metrics
 
-    # STATUS BAR
-    echo -e "${CYAN}Host: $HOST   Uptime: $UPT   Disk: $DISK${NC}"
-    echo ""
+# ===== DRAGON ASCII TITLE =====
+echo -e "${B_RED}"
+echo "██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗"
+echo "██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║"
+echo "██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║"
+echo "██║  ██║██╔══██╗██╔══██║██║   ██║██║   ██║██║╚██╗██║"
+echo "██████╔╝██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║"
+echo "╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝"
+echo -e "${NC}"
 
-    # MAIN DRAGONCLOUD ASCII (INSTANT)
-    echo -e "${RED}██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗${NC}"
-    echo -e "${RED}██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗${NC}"
-    echo -e "${RED}██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║██║     ██║     ██║   ██║██║   ██║██║  ██║${NC}"
-    echo -e "${RED}██║  ██║██╔══██╗██╔══██║██║   ██║██║   ██║██║╚██╗██║██║     ██║     ██║   ██║██║   ██║██║  ██║${NC}"
-    echo -e "${RED}██████╔╝██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝${NC}"
-    echo -e "${RED}╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝${NC}"
-    echo ""
-    echo "────────────────────────────────────────────────────────────────────────────"
-    echo ""
+echo -e "${B_CYAN}                    DRAGONCLOUD CONTROL HUB${NC}"
+echo -e "  ${G}───────────────────────────────────────────────────────────────────────────${NC}"
 
-    # SYSTEM METRICS
-    echo -e "${WHITE}System Health → CPU: ${CPU}% | RAM: ${RAM}% | Network: CONNECTED${NC}"
-    echo ""
+# ===== DASHBOARD CORE =====
+echo -e "  ${W}System Health:${NC}"
+printf "  ${G}CPU:${NC} ${B_CYAN}%s%%%${NC}    ${G}RAM:${NC} ${B_PURPLE}%s%%%${NC}    ${G}Disk:${NC} ${GOLD}%s${NC}\n" "$CPU" "$RAM" "$DISK"
+printf "  ${G}Uptime:${NC} ${B_GREEN}%s${NC}    ${G}Host:${NC} ${B_RED}%s${NC}\n" "$UPT" "$CURRENT_HOST"
+echo ""
 
-    # SIDE-BY-SIDE MENU
-    echo " DEPLOYMENT SERVICES"
-    echo "├─ [1] Setup VPS Environment      ├─ [5] Theme Configurator"
-    echo "├─ [2] Pterodactyl Panel          ├─ [6] System Optimizer"
-    echo "└─ [3] Install Wings Node         └─ [7] No-KVM Virtualization"
-    echo ""
-    echo " MAINTENANCE"
-    echo "└─ [4] Utility Toolbox            [8] SHUTDOWN"
-    echo ""
-    echo "────────────────────────────────────────────────────────────────────────────"
-    echo -ne "${CYAN}➜ root@DragonCloud: ${NC}"
+# ===== ACTION GRID =====
+echo -e "  ${B_CYAN}  DEPLOYMENT SERVICES${NC}"
+echo -e "  ${G}├─ ${W}[1]${NC} Setup VPS Environment      ${G}├─ ${W}[5]${NC} BluePrint Configurator"
+echo -e "  ${G}├─ ${W}[2]${NC} Pterodactyl Panel          ${G}├─ ${W}[6]${NC} System Optimizer"
+echo -e "  ${G}└─ ${W}[3]${NC} Install Wings Node         ${G}└─ ${W}[7]${NC} DDoS Protection"
+echo ""
+
+echo -e "  ${B_PURPLE}  MAINTENANCE${NC}"
+echo -e "  ${G}└─ ${W}[4]${NC} Utility Toolbox            ${B_RED}${NC}${BG_SHADE}${W} [8] SHUTDOWN ${NC}${B_RED}${NC}"
+
+# ===== FOOTER =====
+echo -e "\n  ${G}───────────────────────────────────────────────────────────────────────────${NC}"
+echo -ne "  ${B_CYAN}➜${NC} ${W}Command${NC} ${G}(1-8):${NC} "
 }
 
-# -------------------------------
-# STARTUP SEQUENCE
-# -------------------------------
-startup_sequence() {
-    clear
-    type_text "${RED}DragonCloud Initializing...${NC}" 0.01
-    type_text "${CYAN}Establishing Secure DragonCloud Link...${NC}" 0.005
-    loading_bar
-}
-
-# -------------------------------
-# MAIN LOOP
-# -------------------------------
-startup_sequence
-
+# ================= MAIN LOOP =================
 while true; do
-    render_menu
-    read -r choice
-    case $choice in
-        1) bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh) ;;
-        2) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/panel/run.sh) ;;
-        3) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/wings/run.sh) ;;
-        4) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/tools/run.sh) ;;
-        5) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/thame/chang/dev.sh) ;;
-        6) bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/menu/System1.sh) ;;
-        7) bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/no-kvm/run.sh) ;;
-        8|exit)
-            echo -e "${RED}DragonCloud Link Terminated.${NC}"
-            exit 0 ;;
-        *)
-            echo -e "${RED}Invalid Command!${NC}"
-            sleep 0.5 ;;
-    esac
+show_menu
+read choice
+
+case $choice in
+    1) eval $CMD1 ;;
+    2) eval $CMD2 ;;
+    3) eval $CMD3 ;;
+    4) eval $CMD4 ;;
+    5) eval $CMD5 ;;
+    6) eval $CMD6 ;;
+    7) eval $CMD7 ;;
+    8) eval $CMD8 ;;
+    *) echo -e "${B_RED}Invalid Option!${NC}" ;;
+esac
+
+echo ""
+read -p "Press Enter to return to menu..."
 done
