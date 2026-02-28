@@ -1,112 +1,67 @@
 #!/bin/bash
 
-# ==============================================================================
-#                               CONFIG & COLORS
-# ==============================================================================
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-WHITE='\033[0;37m'
-NC='\033[0m' # No Color
+# ================= COLORS =================
+NC='\033[0m'
+B_RED='\033[1;31m'
+B_CYAN='\033[1;36m'
+B_PURPLE='\033[1;35m'
+B_GREEN='\033[1;32m'
+B_YELLOW='\033[1;33m'
+W='\033[1;37m'
+G='\033[0;32m'
 
-# ==============================================================================
-#                               HELPER FUNCTIONS
-# ==============================================================================
+# ============== ADD YOUR COMMANDS HERE ==============
+CMD1="bash <(curl -s https://yourlink.com/kvm.sh)"
+CMD2="bash <(curl -s https://yourlink.com/nokvm.sh)"
+CMD3="bash <(curl -s https://yourlink.com/lxc.sh)"
+CMD4="bash <(curl -s https://yourlink.com/docker.sh)"
+CMD5="bash <(curl -s https://yourlink.com/idx.sh)"
 
-# Function to pause and wait for user input
-pause() {
-    echo -e ""
-    read -n 1 -s -r -p "Press any key to continue..."
-    echo -e ""
+# ================= MENU FUNCTION =================
+show_menu() {
+clear
+
+echo -e "${B_CYAN}"
+echo "  _____                               _____ _                 _ "
+echo " |  __ \                             / ____| |               | |"
+echo " | |  | |_ __ __ _  __ _  ___  _ __ | |    | | ___  _   _  __| |"
+echo " | |  | | '__/ _` |/ _` |/ _ \| '_ \| |    | |/ _ \| | | |/ _` |"
+echo " | |__| | | | (_| | (_| | (_) | | | | |____| | (_) | |_| | (_| |"
+echo " |_____/|_|  \__,_|\__, |\___/|_| |_|\_____|_|\___/ \__,_|\__,_|"
+echo "                    __/ |                                       "
+echo "                   |___/                                        "
+echo -e "${NC}"
+
+echo -e "${B_PURPLE}                VPS RUN CONTROL PANEL${NC}"
+echo -e "${G}────────────────────────────────────────────────────────${NC}"
+
+echo -e " ${B_GREEN}[1]${NC} KVM-VM Manager"
+echo -e " ${B_GREEN}[2]${NC} NO-KVM Environment"
+echo -e " ${B_GREEN}[3]${NC} LXC/LXD Container Manager"
+echo -e " ${B_GREEN}[4]${NC} Docker Engine Setup"
+echo -e " ${B_GREEN}[5]${NC} IDX Tool Setup"
+echo ""
+echo -e " ${B_RED}[6] Exit${NC}"
+
+echo -e "\n${G}────────────────────────────────────────────────────────${NC}"
+echo -ne "${B_CYAN}➜${NC} ${W}Select Option (1-6): ${NC}"
 }
 
-# Function to display DragonCloud ASCII banner (Header)
-banner() {
-    clear
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${CYAN}██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗${NC}" 
-    echo -e "${CYAN}██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗${NC}"
-    echo -e "${CYAN}██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║██║     ██║     ██║   ██║██║   ██║██║  ██║${NC}"
-    echo -e "${CYAN}██║  ██║██╔══██╗██╔══██║██║   ██║██║   ██║██║╚██╗██║██║     ██║     ██║   ██║██║   ██║██║  ██║${NC}"
-    echo -e "${CYAN}██████╔╝██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝${NC}"
-    echo -e "${CYAN}╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝ ${NC}"                                                                                             
-    echo -e "${CYAN}           D R A G O N C L O U D  PANEL MANAGER     ${NC}"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e ""
-}
+# ================= MAIN LOOP =================
+while true; do
+show_menu
+read choice
 
-# ==============================================================================
-#                               PANEL MENU
-# ==============================================================================
-panel_menu() {
-    while true; do
-        banner
-        
-        # UI Header
-        echo -e "${CYAN} ┌────────────────────────────────────────────────┐${NC}"
-        echo -e "${CYAN} │${NC}              ${YELLOW}SELECT AN OPTION${NC}                  ${CYAN}│${NC}"
-        echo -e "${CYAN} ├──────────────────────┬─────────────────────────┤${NC}"
-        
-        # Menu Rows (Left Column | Right Column)
-        echo -e "${CYAN} │${NC} ${GREEN}2)${NC} Pterodactyl       ${CYAN}│${NC} ${GREEN} 8)${NC} CtrlPanel           ${CYAN}│${NC}"
-        echo -e "${CYAN} │${NC} ${GREEN}3)${NC} Jexactyl          ${CYAN}│${NC} ${GREEN} 9)${NC} Reviactyl           ${CYAN}│${NC}"
-        echo -e "${CYAN} │${NC} ${GREEN}7)${NC} Payment Gateway   ${CYAN}│${NC} ${GREEN}10)${NC} Tools (Ext)         ${CYAN}│${NC}"
-        echo -e "${CYAN} │${NC} ${GREEN}4)${NC} Jexpanel          ${CYAN}│${NC} ${RED}11) Back                       ${CYAN}│${NC}"
-        echo -e "${CYAN} │${NC} ${GREEN}5)${NC} Mythicaldash${CYAN}│${NC}"
-        echo -e "${CYAN} │${NC} ${GREEN}6)${NC} Mythicaldash v3${CYAN}│${NC}"
-        
-        # UI Footer
-        echo -e "${CYAN} └──────────────────────┴─────────────────────────┘${NC}"
-        echo -e ""
-        
-        # Input Prompt
-        echo -e "${WHITE}Enter your choice [1-11]:${NC}"
-        read -p "➔ " p
+case $choice in
+    1) eval $CMD1 ;;
+    2) eval $CMD2 ;;
+    3) eval $CMD3 ;;
+    4) eval $CMD4 ;;
+    5) eval $CMD5 ;;
+    6) echo -e "${B_RED}Exiting VPS Run...${NC}"; exit 0 ;;
+    *) echo -e "${B_RED}Invalid Option!${NC}" ;;
+esac
 
-        # Logic (Original commands preserved)
-        case $p in
-            1) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/unFEATHERPANEL.sh) 
-                pause ;;
-            2) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/panel/pterodactyl/run.sh) 
-                pause ;;
-            3) 
-                bash <(curl -fsSL https://raw.githubusercontent.com/nobita329/ptero/refs/heads/main/ptero/panel/Jexactyl/run.sh)
-                pause ;;
-            4) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/unJexactyl.sh) 
-                pause ;;
-            5) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/undash-3.sh) 
-                pause ;;
-            6) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/dash-v4.sh) 
-                pause ;;
-            7) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/unPaymenter.sh) 
-                pause ;;
-            8) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita54/-150/refs/heads/main/Uninstall/unCtrlPanel.sh) 
-                pause ;;
-            9) 
-                bash <(curl -s https://raw.githubusercontent.com/nobita329/The-Coding-Hub/refs/heads/main/srv/Uninstall/unReviactyl.sh) 
-                pause ;;
-            10) 
-                bash <(curl -s https://raw.githubusercontent.com/yourlink/t-panel.sh) 
-                pause ;;
-            11) 
-                break ;;
-            *) 
-                echo -e "${RED}Invalid Option${NC}"
-                sleep 1 
-                ;;
-        esac
-    done
-}
-
-# Run the menu
-panel_menu
+echo ""
+read -p "Press Enter to return to menu..."
+done
