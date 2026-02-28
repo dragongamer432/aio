@@ -15,10 +15,10 @@ BG_SHADE='\033[100m'
 CMD1="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh)"
 CMD2="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/ptero.sh)"
 CMD3="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/pteropanel/refs/heads/main/wings.sh)"
-CMD4="bash <(curl -s https://yourlink.com/script4.sh)"
+CMD4="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/tools.sh)"
 CMD5="bash <(curl -s https://yourlink.com/script5.sh)"
-CMD6="bash <(curl -s https://yourlink.com/script6.sh)"
-CMD7="bash <(curl -s https://yourlink.com/script7.sh)"
+CMD6="bash <(curl -s https://raw.githubusercontent.com/MuhammadAliUsman/vms/refs/heads/main/optimize-vps.sh)"
+CMD7="bash <(curl -s bash <(curl -s https://raw.githubusercontent.com/dragongamer432/DragonShield/refs/heads/main/ddos.sh))"
 CMD8="shutdown now"
 
 # ================= REAL-TIME ANALYTICS =================
