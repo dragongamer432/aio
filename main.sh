@@ -25,7 +25,6 @@ CMD8="shutdown now"
 get_metrics() {
     CPU=$(top -bn1 | grep "Cpu(s)" | awk '{printf "%.0f", $2+$4}')
     RAM=$(free | awk '/Mem:/ {printf "%.0f", $3*100/$2}')
-    UPT=$(uptime -p | sed 's/up //')
     DISK=$(df -h / | awk 'NR==2 {print $5}')
     CURRENT_HOST="dragoncloud"
 }
