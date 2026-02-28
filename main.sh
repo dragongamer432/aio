@@ -11,22 +11,27 @@ W='\033[1;37m'
 GOLD='\033[1;33m'
 BG_SHADE='\033[100m'
 
-# ============== COMMAND LINKS (EDIT THESE) ==============
-CMD1="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh)"
-CMD2="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/ptero.sh)"
-CMD3="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/pteropanel/refs/heads/main/wings.sh)"
-CMD4="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/tools.sh)"
-CMD5="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/blueprint2.sh)"
-CMD6="bash <(curl -s https://raw.githubusercontent.com/MuhammadAliUsman/vms/refs/heads/main/optimize-vps.sh)"
-CMD7="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/DragonShield/refs/heads/main/ddos.sh)"
-CMD8="shutdown now"
+# ============== COMMAND LINKS ==============
+URL1="https://raw.githubusercontent.com/dragongamer432/aio/main/vpsrun.sh"
+URL2="https://raw.githubusercontent.com/dragongamer432/aio/main/ptero.sh"
+URL3="https://raw.githubusercontent.com/dragongamer432/pteropanel/main/wings.sh"
+URL4="https://raw.githubusercontent.com/dragongamer432/aio/main/tools.sh"
+URL5="https://raw.githubusercontent.com/dragongamer432/aio/main/blueprint2.sh"
+URL6="https://raw.githubusercontent.com/MuhammadAliUsman/vms/main/optimize-vps.sh"
+URL7="https://raw.githubusercontent.com/dragongamer432/DragonShield/main/ddos.sh"
 
-# ================= REAL-TIME ANALYTICS =================
+# ================= METRICS =================
 get_metrics() {
-    CPU=$(top -bn1 | grep "Cpu(s)" | awk '{printf "%.0f", $2+$4}')
+    CPU=$(top -bn1 | awk -F',' '/Cpu/ {print int($1)}')
     RAM=$(free | awk '/Mem:/ {printf "%.0f", $3*100/$2}')
+    UPT=$(uptime -p 2>/dev/null | sed 's/up //')
     DISK=$(df -h / | awk 'NR==2 {print $5}')
     CURRENT_HOST="dragoncloud"
+}
+
+# ================= SAFE EXECUTION =================
+run_script() {
+    curl -fsSL "$1" | bash
 }
 
 # ================= MENU =================
@@ -35,12 +40,14 @@ clear
 get_metrics
 
 echo -e "${B_RED}"
-echo "██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗"
-echo "██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║"
-echo "██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║"
-echo "██║  ██║██╔══██╗██╔══██║██║   ██║██║   ██║██║╚██╗██║"
-echo "██████╔╝██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║"
-echo "╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝"
+cat << "EOF"
+██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗
+██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║
+██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║
+██║  ██║██╔══██╗██╔══██║██║   ██║██║   ██║██║╚██╗██║
+██████╔╝██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝
+EOF
 echo -e "${NC}"
 
 echo -e "${B_CYAN}                    DRAGONCLOUD CONTROL HUB${NC}"
@@ -69,15 +76,15 @@ while true; do
     show_menu
     read -r choice
 
-    case $choice in
-        1) bash -c "$CMD1" ;;
-        2) bash -c "$CMD2" ;;
-        3) bash -c "$CMD3" ;;
-        4) bash -c "$CMD4" ;;
-        5) bash -c "$CMD5" ;;
-        6) bash -c "$CMD6" ;;
-        7) bash -c "$CMD7" ;;
-        8) bash -c "$CMD8" ;;
+    case "$choice" in
+        1) run_script "$URL1" ;;
+        2) run_script "$URL2" ;;
+        3) run_script "$URL3" ;;
+        4) run_script "$URL4" ;;
+        5) run_script "$URL5" ;;
+        6) run_script "$URL6" ;;
+        7) run_script "$URL7" ;;
+        8) shutdown now ;;
         *) echo -e "${B_RED}Invalid Option!${NC}" ;;
     esac
 
