@@ -14,7 +14,7 @@ BG_SHADE='\033[100m'
 # ============== COMMAND LINKS (EDIT THESE) ==============
 CMD1="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/vpsrun.sh)"
 CMD2="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/aio/refs/heads/main/ptero.sh)"
-CMD3="bash <(curl -s https://yourlink.com/script3.sh)"
+CMD3="bash <(curl -s https://raw.githubusercontent.com/dragongamer432/pteropanel/refs/heads/main/wings.sh)"
 CMD4="bash <(curl -s https://yourlink.com/script4.sh)"
 CMD5="bash <(curl -s https://yourlink.com/script5.sh)"
 CMD6="bash <(curl -s https://yourlink.com/script6.sh)"
@@ -58,7 +58,7 @@ echo ""
 echo -e "  ${B_CYAN}  DEPLOYMENT SERVICES${NC}"
 echo -e "  ${G}├─ ${W}[1]${NC} Setup VPS Environment      ${G}├─ ${W}[5]${NC} BluePrint Configurator"
 echo -e "  ${G}├─ ${W}[2]${NC} Pterodactyl Panel          ${G}├─ ${W}[6]${NC} System Optimizer"
-echo -e "  ${G}└─ ${W}[3]${NC} Install Wings Node         ${G}└─ ${W}[7]${NC} DDoS Protection"
+echo -e "  ${G}└─ ${W}[3]${NC} Install Pterodactyl Wings  ${G}└─ ${W}[7]${NC} DDoS Protection"
 echo ""
 
 echo -e "  ${B_PURPLE}  MAINTENANCE${NC}"
